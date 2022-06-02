@@ -27,6 +27,29 @@ function Todo() {
     /* テストコード 終了 */
   ]);
 
+  const [job, setJob] = useState('');
+
+  const handleInput = (e) => {
+    setJob((prevState) => {
+      prevState = e.target.value;
+      return prevState;
+    })
+  }
+
+  const hanleKeyDown = (e) => {
+    if (e.key === 'Enter'){
+      setItems((prevState) => {
+        prevState = [...prevState, { key: getKey(), text: job, done: false }];
+        return prevState;
+      })
+
+      setJob((prevState) => {
+        prevState = '';
+        return prevState;
+      })
+    }
+  }
+
   const handleClick = (e) => {
     e.target.classList.toggle('has-text-grey-light')
   }
@@ -36,6 +59,7 @@ function Todo() {
       <div className="panel-heading">
         ITSS ToDoアプリ
       </div>
+      <input value={job} type="text" onKeyDown={e => hanleKeyDown(e)} onInput={e => handleInput(e)} />
       {items.map(item => (
         <TodoItem handleClick={e => handleClick(e)} item={item} key={item.key}/>
       ))}
