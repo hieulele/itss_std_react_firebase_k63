@@ -27,7 +27,9 @@ function useStorage() {
     
   };
 
-  return [items, putItems, clearItems];
+  return [storageJobs, items, putItems, clearItems];
 }
+
+export const storageJobs = JSON.parse(localStorage.getItem('items'));
 
 export default useStorage;

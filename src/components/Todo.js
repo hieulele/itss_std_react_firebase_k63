@@ -13,21 +13,19 @@ import Input from './Input';
 import Filter from './Filter';
 
 /* カスタムフック */
-import useStorage from '../hooks/storage';
+import useStorage , {storageJobs} from '../hooks/storage';
 
 /* ライブラリ */
 import {getKey} from "../lib/util";
 
 function Todo() {
-  const [items, setItems] = useState([
+  const [items, setItems] = useState(storageJobs ?? [
       /* テストコード 開始 */
     { key: getKey(), text: '日本語の宿題', done: false },
     { key: getKey(), text: 'reactを勉強する', done: false },
     { key: getKey(), text: '明日の準備をする', done: false },
     /* テストコード 終了 */
   ]);
-
-  console.log(items)
 
   const [tabs, setTabs] = useState([
     {text : 'すべて', active : true}, 
@@ -50,6 +48,10 @@ function Todo() {
     if (e.key === 'Enter'){
       setItems((prevState) => {
         prevState = [...prevState, { key: getKey(), text: job, done: false }];
+
+        const jsonJobs = JSON.stringify(prevState);
+
+        localStorage.setItem('items',jsonJobs);
         return prevState;
       })
 
@@ -64,7 +66,7 @@ function Todo() {
     setCheck(!check)
 
     setItems((prevState) => {
-      return prevState.filter((value,i) => {
+      prevState = prevState.filter((value,i) => {
         if(i === index && !check) {
           value.done = true;
         }else if (i === index && check){
@@ -73,6 +75,12 @@ function Todo() {
 
         return value;
       })
+
+      const jsonJobs = JSON.stringify(prevState);
+
+      localStorage.setItem('items',jsonJobs);
+
+      return prevState;
     })
   }
 
