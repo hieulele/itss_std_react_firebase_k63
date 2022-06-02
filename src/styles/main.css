@@ -3,3 +3,7 @@
 .container {
   margin-top: 2rem;
 }
+
+.has-text-grey-light{
+  background-color: grey;
+}
