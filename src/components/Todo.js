@@ -27,6 +27,16 @@ function Todo() {
     /* テストコード 終了 */
   ]);
 
+  console.log(items)
+
+  const [tabs, setTabs] = useState([
+    {text : 'すべて', active : true}, 
+    {text : '未完了', active : false}, 
+    {text : '完了済み', active : false},
+  ])
+
+  const [tab, setTab] = useState(0)
+
   const [job, setJob] = useState('');
 
   const handleInput = (e) => {
@@ -50,8 +60,50 @@ function Todo() {
     }
   }
 
-  const handleClick = (e) => {
-    e.target.classList.toggle('has-text-grey-light')
+  const handleChange = (setCheck, check, index) => {
+    setCheck(!check)
+
+    setItems((prevState) => {
+      return prevState.filter((value,i) => {
+        if(i === index && !check) {
+          value.done = true;
+        }else if (i === index && check){
+          value.done = false;
+        }
+
+        return value;
+      })
+    })
+  }
+
+  const handleSetTabs = (index) => {
+    setTab(index)
+
+    setTabs((prevState) => {
+      return prevState.filter((value,i) => {
+        if(i === index) {
+          value.active = true;
+        }else{
+          value.active = false;
+        }
+
+        return value;
+      })
+    })
+  }
+
+  const rederTodo = (item, index) => {
+    if(tab === 0 ){
+      return <TodoItem index={index} handleChange={handleChange} item={item} key={item.key}/>
+    }
+
+    if(tab === 1 && !item.done){
+      return <TodoItem index={index} handleChange={handleChange} item={item} key={item.key}/>
+    }
+
+    if(tab === 2 && item.done){
+      return <TodoItem index={index} handleChange={handleChange} item={item} key={item.key}/>
+    }
   }
 
   return (
@@ -60,8 +112,13 @@ function Todo() {
         ITSS ToDoアプリ
       </div>
       <input value={job} type="text" onKeyDown={e => hanleKeyDown(e)} onInput={e => handleInput(e)} />
-      {items.map(item => (
-        <TodoItem handleClick={e => handleClick(e)} item={item} key={item.key}/>
+      <ul>
+        {tabs.map((tab, i) => (
+          <li onClick={() => handleSetTabs(i)} key={i} className={tab.active ? 'is-active' : ''}>{tab.text}</li>
+        ))}
+      </ul>
+      {items.map((item, index) => (
+        rederTodo(item, index)
       ))}
       <div className="panel-block">
         {items.length} items
