@@ -13,8 +13,8 @@ const STORAGE_KEY = 'itss-todo';
 
 function useStorage() {
   const [items, setItems] = useState([]);
-　
-　/* 副作用を使う */
+
+  /* 副作用を使う */
   useEffect(() => {
     
   }, []);

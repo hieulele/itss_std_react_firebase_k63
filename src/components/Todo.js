@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 /* 
   【Todoのデータ構成】
@@ -19,7 +19,7 @@ import useStorage from '../hooks/storage';
 import {getKey} from "../lib/util";
 
 function Todo() {
-  const [items, putItems] = React.useState([
+  const [items, setItems] = useState([
       /* テストコード 開始 */
     { key: getKey(), text: '日本語の宿題', done: false },
     { key: getKey(), text: 'reactを勉強する', done: false },
@@ -33,10 +33,7 @@ function Todo() {
         ITSS ToDoアプリ
       </div>
       {items.map(item => (
-        <label className="panel-block">
-            <input type="checkbox" />
-            {item.text}
-        </label>
+        <TodoItem item={item} key={item.key}/>
       ))}
       <div className="panel-block">
         {items.length} items
