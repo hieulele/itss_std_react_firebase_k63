@@ -66,6 +66,11 @@ function Todo() {
       <div className="panel-block">
         {items.length} items
       </div>
+      <div className="panel-block">
+        <button className="button is-light is-fullwidth" onClick={clearItems}>
+          全部のToDoを削除
+        </button>
+      </div>
     </div>
   );
 }
