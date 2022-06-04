@@ -17,7 +17,7 @@ function Todo() {
 
   const handleChange = (item) => {
     const newsItems = items.map(value => {
-      if(value.text === item.text) {
+      if (value.text === item.text) {
         value.done = !value.done;
       }
       return value;
@@ -32,19 +32,19 @@ function Todo() {
 
   const displayItems = () => {
     let newItems;
-    if (tab === 'すべて'){
+    if (tab === 'すべて') {
       newItems = items.filter(item => {
         return true;
       });
     }
 
-    if (tab === '未完了'){
+    if (tab === '未完了') {
       newItems = items.filter(item => {
         return !item.done;
       });
     }
 
-    if (tab === '完了済み'){
+    if (tab === '完了済み') {
       newItems = items.filter(item => {
         return item.done;
       });
@@ -61,10 +61,10 @@ function Todo() {
       <Input handleAdd={handleAdd} />
       <Filter handleFilterChange={handleFilterChange} />
       {displayItems().map(item => (
-        <TodoItem handleChange={handleChange} item={item} key={item.key}/>
+        <TodoItem handleChange={handleChange} item={item} key={item.key} />
       ))}
       <div className="panel-block">
-        {items.length} items
+        {displayItems().length} items
       </div>
       <div className="panel-block">
         <button className="button is-light is-fullwidth" onClick={clearItems}>
