@@ -18,3 +18,7 @@ li{
 li.is-active{
   color: blue;
 }
+
+.panel-heading {
+  background-color: #f14668;
+}

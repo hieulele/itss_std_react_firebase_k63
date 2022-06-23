@@ -2,28 +2,22 @@ import { useState } from 'react';
 import TodoItem from './TodoItem';
 import Input from './Input';
 import Filter from './Filter';
-import useStorage from '../hooks/storage';
-import { getKey } from "../lib/util";
+// import useStorage from '../hooks/storage';
+import useFbStorage from '../hooks/fbStorage';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCalendarCheck } from '@fortawesome/free-solid-svg-icons';
 
 function Todo() {
-  const [items, putItems, clearItems] = useStorage();
+  const [items, addItem, updateItem, clearItems] = useFbStorage();
 
   const [tab, setTab] = useState('すべて')
 
   const handleAdd = (text) => {
-    const newsItems = [...items, { key: getKey(), text: text, done: false }]
-    putItems(newsItems)
+    addItem({ text, done: false })
   }
 
   const handleChange = (item) => {
-    const newsItems = items.map(value => {
-      if (value.text === item.text) {
-        value.done = !value.done;
-      }
-      return value;
-    })
-
-    putItems(newsItems)
+    updateItem(item)
   }
 
   const handleFilterChange = (text) => {
@@ -56,12 +50,15 @@ function Todo() {
   return (
     <div className="panel">
       <div className="panel-heading">
-        ITSS ToDoアプリ
+        <span className="icon-text">
+          <FontAwesomeIcon icon={faCalendarCheck} />
+          <span> ITSS Todoアプリ</span>
+        </span>
       </div>
       <Input handleAdd={handleAdd} />
       <Filter handleFilterChange={handleFilterChange} />
       {displayItems().map(item => (
-        <TodoItem handleChange={handleChange} item={item} key={item.key} />
+        <TodoItem handleChange={handleChange} item={item} key={item.id} />
       ))}
       <div className="panel-block">
         {displayItems().length} items
