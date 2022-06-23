@@ -1,5 +1,3 @@
-import React from 'react'
-
 /* スタイルシート */
 import './styles/main.css';
 
