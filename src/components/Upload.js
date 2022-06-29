@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 
 /* ライブラリ */
 import { uploadImage } from "../lib/firebase";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser, faUpload } from '@fortawesome/free-solid-svg-icons';
 
 function Upload({ userImage, onSletctedImage }) {
     const [isModal, setIsModal] = useState(false);
@@ -21,7 +23,7 @@ function Upload({ userImage, onSletctedImage }) {
 
     const ImageViewer = () => {
         if (!imageUrl) {
-            return <i className="fas fa-user"></i>
+            return <FontAwesomeIcon icon={faUser} />
         } else {
             return (
                 <div>
@@ -41,7 +43,7 @@ function Upload({ userImage, onSletctedImage }) {
                             <input className="file-input" type="file" name="resume" onChange={handleImage} />
                             <span className="file-cta">
                                 <span className="file-icon">
-                                    <i className="fas fa-upload"></i>
+                                    <FontAwesomeIcon icon={faUpload} />
                                 </span>
                                 <span className="file-label">画像を選択してください</span>
                             </span>
